@@ -5,7 +5,7 @@
 Time::Time(int hour, int minutes, int seconds, std::string daytime){
     //Asigno los valores a los atributos de la clase chequeando que sean válidos
     //Si no son válidos lanzo una excepción que luego será capturada en el main
-    (hour>11 || hour<0) ? throw "Invalid hour" : this->hour = hour;
+    (hour>12 || hour<0) ? throw "Invalid hour" : this->hour = hour;
     (minutes>59 || minutes<0) ? throw "Invalid minutes" : this->minutes = minutes;
     (seconds>59 || seconds<0) ? throw "Invalid seconds" : this->seconds = seconds;
     (daytime=="a.m." || daytime=="p.m.") ? this->daytime = daytime : throw "Invalid daytime";
@@ -28,7 +28,7 @@ std::string Time::getDaytime(){
 }
 
 void Time::setHour(int hour){
-    (hour>11 || hour<0) ? throw "Invalid hour" : this->hour = hour;
+    (hour>12 || hour<0) ? throw "Invalid hour" : this->hour = hour;
 }
 
 void Time::setMinutes(int minutes){
@@ -50,9 +50,11 @@ void Time::getTime(){
 
 void Time::printTime(){
     int hour = this->hour;
-    //Si la hora es p.m. le sumo 12 para que se imprima en formato de 24 horas
-    if(this->daytime=="p.m."){
-        hour+=12;
+     //Si la hora es p.m. le sumo 12 para que se imprima en formato de 24 horas
+    if (this->daytime == "a.m." && hour == 12) {
+        hour = 0; // Medianoche, se convierte a 0
+    } else if (this->daytime == "p.m." && hour != 12) {
+        hour += 12; // Excepto 12 p.m. que ya es 12
     }
     //Utilizo setfill y setw para que los números se impriman con dos dígitos
     std::cout<<std::setfill('0')<<std::setw(2)<<hour<<":"<<std::setfill('0')<<std::setw(2)<<this->minutes<<":"<<std::setfill('0')<<std::setw(2)<<this->seconds<<std::endl;

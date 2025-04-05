@@ -2,13 +2,15 @@
 #include "course.hpp"
 #include "student.hpp"
 
-
 int main(){
     Course course("Prueba");
     int option;
     do {
         std::cout << "1. Inscribir estudiante\n2. Desinscribir estudiante\n3. Verificar inscripción\n4. Verificar si el curso está completo\n5. Mostrar estudiantes\n6. Copiar Curso\n7. Salir\nIngrese una opción: ";
-        std::cin >> option;
+        if(!(std::cin >> option)){
+            std::cin.clear();
+            std::cin.ignore(1000,'\n');
+        }
         switch (option) {
             case 1:{
                 std::string nombre;
@@ -19,8 +21,8 @@ int main(){
                 std::cout << "Legajo: ";
                 std::cin >> id;
                 try{
-                    auto student = std::make_unique<Student>(Student(nombre, id));
-                    (course.addStudent(std::move(student))) ? std::cout<<"El estduiante fue inscripto correctamente"<<std::endl : std::cout<<"El estudiante ya se encuentra en el curso"<<std::endl;
+                    auto student = std::make_shared<Student>(nombre, id);
+                    (course.addStudent(student)) ? std::cout<<"El estduiante fue inscripto correctamente"<<std::endl : std::cout<<"El estudiante ya se encuentra en el curso o el curso esta lleno"<<std::endl;
                 } catch (const char* msg){
                     std::cout << msg << std::endl;
                 }
@@ -52,7 +54,7 @@ int main(){
                 std::cout << "Creando una copia del curso...\n";
                 Course copiedCourse = course; // Crear una copia del curso usando el constructor de copia
                 std::cout << "Estudiantes en el curso copiado:\n";
-                std::cout << course; // Mostrar los estudiantes del curso copiado
+                std::cout << copiedCourse; // Mostrar los estudiantes del curso copiado
                 break;
             }
             case 7:

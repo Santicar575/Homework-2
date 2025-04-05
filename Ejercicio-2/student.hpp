@@ -13,7 +13,8 @@ class Student{
         Student(std::string name, int id);
         Student(const Student& other);
         void addCourse(std::string name, int grade);
-        std::string getName();
-        int getId();
-        float getAverage();
+        std::string getName() const;
+        int getId() const;
+        float getAverage() const;
+        bool operator<(const Student& other) const;
 };

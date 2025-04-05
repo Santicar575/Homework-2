@@ -26,6 +26,6 @@ std::unique_ptr<Numero> Entero::multiplicacion(const Numero& other) const{
     return nullptr;
 }
 
-std::string Entero::toString(){
+std::string Entero::toString() const{
     return std::to_string(this->value);
 }

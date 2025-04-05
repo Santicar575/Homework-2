@@ -26,6 +26,6 @@ std::unique_ptr<Numero> Real::multiplicacion(const Numero& other) const{
     return nullptr;
 }
 
-std::string Real::toString(){
+std::string Real::toString() const{
     return std::to_string(this->value);
 }

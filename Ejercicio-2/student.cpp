@@ -2,7 +2,7 @@
 
 bool Student::isAlpha(std::string str){
     for(char c : str){
-        if(!std::isalpha(c)) return false;
+        if(!std::isalpha(c) && !std::isspace(c)) return false;
     }
     return true;
 }
@@ -18,15 +18,15 @@ Student::Student(const Student& other) : name(other.name),id(other.id){
     }
 }
 
-std::string Student::getName(){
+std::string Student::getName() const {
     return name;
 }
 
-int Student::getId(){
+int Student::getId() const {
     return id;
 }
 
-float Student::getAverage(){
+float Student::getAverage() const{
     int count = 0, average = 0, grade;
     for(std::pair<std::string, int> course : courses){
         grade = course.second;
@@ -35,9 +35,13 @@ float Student::getAverage(){
             count++;
         }        
     }
-    return (count = 0) ? 0 : static_cast<float>(average/count);
+    return (count == 0) ? 0 : static_cast<float>(average/count);
 }
 
 void Student::addCourse(std::string name, int grade){
     courses.push_back(std::make_pair(name, grade));
+}
+
+bool Student::operator<(const Student& other) const{
+    return this->getName() < other.getName();
 }

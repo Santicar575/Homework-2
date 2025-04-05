@@ -10,32 +10,32 @@ class Course{
     private:
         static const int maxCapacity = 20;
         std::string name;
-        std::vector<std::unique_ptr<Student>> students;
+        std::vector<std::shared_ptr<Student>> students;
         int currentCapacity = 0;
     public:
         Course(std::string name);
         //Creo otro constructor para poder realizar copias de cursos
         Course(const Course& other);
 
-        std::string getName();
+        std::string getName() const;
         void setName(std::string name);
 
-        //Retorna true si el estudiante fue incertado correctamente, false de lo contrario
-        bool addStudent(std::unique_ptr<Student> student);
-        //Retorna true si el estudiante fue incertado correctamente, false de lo contrario
+        //Retorna true si el estudiante fue insertado correctamente, false de lo contrario
+        bool addStudent(const std::shared_ptr<Student>& student);
+        //Retorna true si el estudiante fue insertado correctamente, false de lo contrario
         bool addStudent(std::string name, int id);
 
         //Retorna la posicion del alumno en el vector de estudiantes o -1 si no lo encontro
-        int searchStudent(int id);
+        int searchStudent(int id) const;
 
         //Retorna true si el estudiante fue eliminado correctamente, false de lo contrario
         bool removeStudent(int id);
 
         //Imprime la lista dde estudiantes en orden alfabetico
-        void printStudents();
+        void printStudents() const;
 
         //Retorna true si el curso esta completo, false de lo contrario
-        bool isFull();
+        bool isFull() const;
 
         friend std::ostream& operator<<(std::ostream& os, const Course& course);
 };
